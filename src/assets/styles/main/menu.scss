@@ -1,0 +1,16 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 95%;
+
+  .link {
+    width: 100%;
+    padding: 1em 0 1em 5%;
+
+    &.active, &:hover {
+      background-color: #656565;
+    }
+
+  }
+}
