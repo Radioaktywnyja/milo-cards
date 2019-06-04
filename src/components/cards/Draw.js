@@ -1,41 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment } from 'react';
 
-import cardback from './../../assets/images/cardback.png';
+import useDataApi from './Fetch';
+import DuplicateCards from './DuplicateCards';
 
-function NewDeck(props) {
-  const [cards, setCards] = useState([]);
+function Draw(props) {
+  const draw = useDataApi(props.url);
 
-  useEffect(() => {
-    async function drawCards() {
-      // get new deck
-      const deck = await fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`);
-      const deckJson = await deck.json();
-      var deckId = deckJson.deck_id;
-      // draw cards
-      const result = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=${props.quantity}`);
-      const json = await result.json();
-      // duplicate every cards
-      var tempArray = [];
-      json.cards.map(item => (
-         tempArray.push(item, item)
-      ))
-      // shuffle new array
-      tempArray.sort(() => Math.random() - 0.5);
-      setCards(tempArray);
-    };
-    drawCards();
-  }, [props.quantity]);
+  return (
+    <Fragment>
+      {draw.isError && <div>Something went wrong ...</div>}
 
-
-  return(
-      <div className="board">
-        {cards.map((item, i) => (
-          <span className="card"><img src={cardback} alt={item.code} id={"card"+i} /></span>
-        ))}
-      </div>
+      {draw.isLoading ? (
+        <div>Loading deck...</div>
+      ) : (
+        <DuplicateCards cards={draw.data.cards} />
+      )}
+    </Fragment>
   );
 }
 
-
-
-export default NewDeck;
+export default Draw;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './../../assets/styles/style.scss';
 
-import NewDeck from './../cards/Draw.js';
+import NewDeck from './../cards/NewDeck';
 
 function Memory() {
   return(

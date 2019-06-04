@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Sidebar from './Sidebar.js';
-import Memory from './../memory/index.js';
+import Sidebar from './Sidebar';
+import Memory from './../memory';
 
 function Main() {
   return(
