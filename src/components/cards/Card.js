@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import cardback from './../../assets/images/cardback.png';
 
 function Card(props) {
-  const [active, setActive] = useState(false);
 
-  function toggleActive() {
-    setActive(active === false ? true : false);
-    // props.setCardsShown(props.cardsShown + 1);
+  function turnCard() {
+    props.dispatch({type: 'TURN', id: props.id});
   }
 
   return(
-    <span className="card"><img src={active === false ? cardback : props.image} alt={props.code} className="card" id={"card"+props.index} onClick={toggleActive} /></span>
+    <span className="card"><img src={props.complete === false ? cardback : props.image} alt={props.code} className="card" id={props.id} onClick={turnCard} /></span>
   );
 }
 

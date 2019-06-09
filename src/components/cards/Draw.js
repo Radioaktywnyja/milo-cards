@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 import useDataApi from './Fetch';
-import DuplicateCards from './DuplicateCards';
+import DealCards from './DealCards';
 
 function Draw(props) {
   const draw = useDataApi(props.url);
@@ -11,9 +11,9 @@ function Draw(props) {
       {draw.isError && <div>Something went wrong ...</div>}
 
       {draw.isLoading ? (
-        <div>Loading deck...</div>
+        <div>Drawing cards...</div>
       ) : (
-        <DuplicateCards cards={draw.data.cards} />
+        <DealCards cards={draw.data.cards} />
       )}
     </Fragment>
   );
