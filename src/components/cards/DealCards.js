@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useEffect } from 'react';
+import React, { Fragment, useReducer, useEffect, useState, useRef } from 'react';
 import uuid from 'uuid/v4';
 
 import Card from './Card';
@@ -79,9 +79,20 @@ const cardReducer = (state, action) => {
   }
 }
 
+const Wictory = () => {
+  return <div class="victory">!!! VICTORY !!!</div>;
+};
+
 function DealCards(props) {
 
-  const [cards, dispatchCards] = useReducer(cardReducer, { deck: [], checker: 0, counter: 0, cardA: {code: 'cardA'}, cardB: {code: 'cardB'} });
+  const [isWin, setIsWin] = useState(false);
+  const [cards, dispatchCards] = useReducer(cardReducer, {
+    deck: [],
+    checker: 0,
+    counter: 0,
+    cardA: { code: "cardA" },
+    cardB: { code: "cardB" }
+  });
 
   useEffect(() => {
     // duplicate drawed cards
@@ -94,25 +105,49 @@ function DealCards(props) {
 
   useEffect(() => {
     if (cards.checker === 2) {
-      setTimeout(() => {dispatchCards({type: 'COMPARE', cardA: cards.cardA, cardB: cards.cardB})}, 500);
+      setTimeout(() => {
+        dispatchCards({
+          type: "COMPARE",
+          cardA: cards.cardA,
+          cardB: cards.cardB
+        });
+      }, 500);
     }
-  }, [cards.checker]);
+  }, [cards.cardA, cards.cardB, cards.checker]);
 
   const deckLength = cards.deck.length;
+  const isFirstRun = useRef(true);
   useEffect(() => {
-    if (cards.counter === deckLength) {
-      console.log("victory");
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    } else if (cards.counter === deckLength) {
+      setIsWin(true);
     }
   }, [cards.counter, deckLength]);
 
+
   return (
-      <Fragment>
-        {cards.deck.map((item) => (
-          <Card code={item.code} image={item.image} key={item.id} id={item.id} complete={item.complete} checked={item.checked} dispatch={dispatchCards} checker={cards.checker} cardA={cards.cardA} cardB={cards.cardB} />
-        ))}
-        {console.log(cards)}
-        {cards.counter}
-      </Fragment>
+    <Fragment>
+      {isWin ? (
+        <Wictory />
+      ) : (
+        cards.deck.map(item => (
+          <Card
+            code={item.code}
+            image={item.image}
+            key={item.id}
+            id={item.id}
+            complete={item.complete}
+            checked={item.checked}
+            dispatch={dispatchCards}
+            checker={cards.checker}
+            cardA={cards.cardA}
+            cardB={cards.cardB}
+          />
+        ))
+      )}
+    </Fragment>
   );
 }
 

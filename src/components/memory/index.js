@@ -1,12 +1,20 @@
-import React from 'react';
-import './../../assets/styles/style.scss';
+import React, { useState } from "react";
+import "./../../assets/styles/style.scss";
 
-import NewDeck from './../cards/NewDeck';
+import MemoryOptions from "./MemoryOptions";
+import NewDeck from "./../cards/NewDeck";
+import useDataApi from './../cards/Fetch.js';
 
 function Memory() {
-  return(
+  const [quantity, setQuantity] = useState(12);
+  const [gameNumber, setGameNumber] = useState(1);
+
+  const deck = useDataApi(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`);
+
+  return (
     <div className="memory">
-      <NewDeck quantity="12" />
+      <MemoryOptions quantity={quantity} setQuantity={setQuantity} gameNumber={gameNumber} setGameNumber={setGameNumber} />
+      <NewDeck quantity={quantity} gameNumber={gameNumber} deck={deck}/>
     </div>
   );
 }

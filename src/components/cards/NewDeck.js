@@ -1,24 +1,34 @@
 import React from 'react';
+import axios from 'axios';
 
 import Draw from './Draw';
 import useDataApi from './Fetch';
 
 function NewDeck(props) {
 
-  const deck = useDataApi(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`);
-  const url = `https://deckofcardsapi.com/api/deck/${deck.data.deck_id}/draw/?count=${props.quantity}`;
+  let deck = useDataApi(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`);
+  const deckId = deck.data.deck_id;
+  let url = `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=${props.quantity}`;
+
+  React.useEffect(() => {
+    const reshuffle = async () => {
+      const result = await axios(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`);
+      deck = result.data;
+    };
+    reshuffle();
+  }, [deckId, props.quantity, props.gameNumber]);
+
 
   return(
-      <div className="board">
+    <div className="board">
+      {deck.isError && <div>Something went wrong ...</div>}
 
-        {deck.isError && <div>Something went wrong ...</div>}
-
-        {deck.isLoading ? (
-          <div>Shuffling deck...</div>
-        ) : (
-          <Draw url={url} />
-        )}
-      </div>
+      {deck.isLoading ? (
+        <div>Shuffling deck...</div>
+      ) : (
+        <Draw url={url} />
+      )}
+    </div>
   );
 }
 
