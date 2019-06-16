@@ -80,7 +80,7 @@ const cardReducer = (state, action) => {
 }
 
 const Wictory = () => {
-  return <div class="victory">!!! VICTORY !!!</div>;
+  return <div class="info victory">!!! VICTORY !!!</div>;
 };
 
 function DealCards(props) {
@@ -111,7 +111,7 @@ function DealCards(props) {
           cardA: cards.cardA,
           cardB: cards.cardB
         });
-      }, 500);
+      }, 750);
     }
   }, [cards.cardA, cards.cardB, cards.checker]);
 

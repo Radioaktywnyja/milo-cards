@@ -21,10 +21,10 @@ function NewDeck(props) {
 
   return(
     <div className="board">
-      {deck.isError && <div>Something went wrong ...</div>}
+      {deck.isError && <div className="info">Something went wrong ...</div>}
 
       {deck.isLoading ? (
-        <div>Shuffling deck...</div>
+        <div className="info">Shuffling deck...</div>
       ) : (
         <Draw url={url} />
       )}

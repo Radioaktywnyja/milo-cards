@@ -4,9 +4,9 @@ import { Link, withRouter } from 'react-router-dom';
 function Menu(props) {
   return(
     <div className="menu">
-      <span className='link'>Home</span>
-      <Link to="/" className={props.location.pathname === '/' ? 'link active' : 'link'}>Memory</Link>
-      <span className='link'>Contact</span>
+      <Link to="/" className={props.location.pathname === '/' ? 'link active' : 'link'}>Home</Link>
+      <Link to="/memory" className={props.location.pathname === '/memory' ? 'link active' : 'link'}>Memory</Link>
+      <Link to="/contact" className={props.location.pathname === '/contact' ? 'link active' : 'link'}>Contact</Link>
     </div>
   );
 }

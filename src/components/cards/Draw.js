@@ -8,10 +8,10 @@ function Draw(props) {
 
   return (
     <Fragment>
-      {draw.isError && <div>Something went wrong ...</div>}
+      {draw.isError && <div className="info">Something went wrong ...</div>}
 
       {draw.isLoading ? (
-        <div>Drawing cards...</div>
+        <div className="info">Drawing cards...</div>
       ) : (
         <DealCards cards={draw.data.cards} />
       )}

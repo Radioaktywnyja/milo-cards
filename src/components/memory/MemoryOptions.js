@@ -21,7 +21,7 @@ function MemoryOptions(props) {
 
   return (
     <div class="options">
-      <span>Set new pairs numer: </span>
+      <span>Pairs: </span>
       <button onClick={increase}>+</button>
       <span className="pairs-quantity">{pairs}</span>
       <button onClick={decrease}>-</button>
